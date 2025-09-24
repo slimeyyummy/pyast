@@ -18,7 +18,7 @@
 - [Installation](#installation)
 - [Quick Start](#quick-start)
 - [Usage Examples](#usage-examples)
-- [API Reference](#Api-Reference)
+- [API Reference](#API-Reference)
 - [Contributing](#contributing)
 - [Credits](#credits)
 - [License](#license)
