@@ -24,12 +24,7 @@
 - [Credits](#credits)
 - [License](#license)
 
-##  Installation
-
-### From PyPI (Recommended)
-```bash
-pip install pyast-remaked==0.1.1
-```
+##  Installations
 
 ### From Source
 ```bash
