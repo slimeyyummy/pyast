@@ -2,16 +2,16 @@
 
 > A powerful Python AST implementation with advanced features for code analysis and transformation
 
-## ✨ Features
+##  Features
 
-- 🔍 **Advanced Parsing** - Robust Python code parsing with error tolerance
-- 🔧 **Transformation Pipeline** - Extensible system for AST transformations
-- 🎯 **Pattern Matching** - Powerful query system for AST pattern matching
-- 💾 **Serialization** - JSON serialization/deserialization support
-- 📊 **Symbol Analysis** - Complete symbol table management
-- 🎨 **Visualization** - Export AST to DOT, JSON, and GraphML formats
-- 🔌 **Plugin System** - Extensible architecture for custom passes and nodes
-- ⚡ **Performance** - Optimized for large codebases
+-  **Advanced Parsing** - Robust Python code parsing with error tolerance
+-  **Transformation Pipeline** - Extensible system for AST transformations
+-  **Pattern Matching** - Powerful query system for AST pattern matching
+-  **Serialization** - JSON serialization/deserialization support
+-  **Symbol Analysis** - Complete symbol table management
+-  **Visualization** - Export AST to DOT, JSON, and GraphML formats
+-  **Plugin System** - Extensible architecture for custom passes and nodes
+-  **Performance** - Optimized for large codebases
 
 ## 📋 Table of Contents
 
@@ -32,19 +32,19 @@ pip install pyast
 
 ### From Source
 ```bash
-git clone https://github.com/yourusername/pyast.git
+git clone https://github.com/slimeyyummy/pyast
 cd pyast
 pip install -e .
 ```
 
 ### Development Setup
 ```bash
-git clone https://github.com/yourusername/pyast.git
+git clone https://github.com/slimeyyummy/pyast
 cd pyast
 pip install -r requirements-dev.txt
 ```
 
-## ⚡ Quick Start
+##  Quick Start
 
 ```python
 import pyast
@@ -73,7 +73,7 @@ functions = matcher.find_functions(tree)
 calls = matcher.find_calls(tree, "fibonacci")
 ```
 
-## 📖 Usage Examples
+##  Usage Examples
 
 ### Basic AST Operations
 ```python
@@ -200,55 +200,13 @@ matcher.find_matches(tree, "call fibonacci")
 matcher.find_matches(tree, "call print")
 ```
 
-## 🤝 Contributing
-
-We welcome contributions! Here's how you can help:
-
-### Development Setup
-```bash
-git clone https://github.com/yourusername/pyast.git
-cd pyast
-pip install -r requirements-dev.txt
-```
-
-### Running Tests
-```bash
-pytest
-pytest --cov=pyast  # With coverage
-```
-
-### Code Quality
-```bash
-black pyast/ tests/  # Format code
-flake8 pyast/ tests/  # Lint code
-mypy pyast/  # Type checking
-```
-
-### Adding New Features
-1. Fork the repository
-2. Create a feature branch
-3. Add your changes with tests
-4. Ensure all tests pass
-5. Submit a pull request
-
 ## 👥 Credits
 
+
 ### Core Contributors
-- **PyAST Team** - Original implementation and architecture
+- **slimeyy** - Original implementation and architecture
 
-### Special Thanks
-- Python Software Foundation - For the ast module
-- Graphviz - For DOT format support
-- Open Source Community - For inspiration and tools
-
-### Libraries and Tools
-- **dataclasses** - For node definitions
-- **typing** - For type hints
-- **pytest** - For testing framework
-- **black** - For code formatting
-- **mypy** - For type checking
-
-## 📜 License
+##  License
 
 MIT License
 
@@ -274,12 +232,3 @@ SOFTWARE.
 
 ---
 
-<div align="center">
-  <p><strong>Built with ❤️ by the PyAST community</strong></p>
-  <p>
-    <a href="#features">Features</a> •
-    <a href="#installation">Installation</a> •
-    <a href="#quick-start">Quick Start</a> •
-    <a href="#contributing">Contributing</a>
-  </p>
-</div>
