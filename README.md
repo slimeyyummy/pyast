@@ -23,7 +23,7 @@
 - [Credits](#credits)
 - [License](#license)
 
-## 🚀 Installation
+##  Installation
 
 ### From PyPI (Recommended)
 ```bash
