@@ -87,19 +87,25 @@ print_ast(tree)
 
 ### Advanced Pattern Matching
 ```python
-from pyast import Matcher, CallPattern, AssignPattern
+from pyast import Parser, Matcher
+
+# Parse Python code
+parser = Parser()
+tree = parser.parse('x = 1 + 2; y = x * 3; z = fibonacci(y)')
 
 matcher = Matcher()
 
 # Find all function calls
 calls = matcher.find_matches(tree, "call *")
 
-# Find specific assignments
+# Find assignments to specific variables
 assignments = matcher.find_matches(tree, "assign x")
 
-# Complex queries
-pattern = CallPattern(func_name="fibonacci")
-fib_calls = matcher.find_matches(tree, pattern)
+# Find calls to specific functions
+fib_calls = matcher.find_matches(tree, "call fibonacci")
+
+# Complex patterns with regex
+import_calls = matcher.find_matches(tree, "call /import.*/")
 ```
 
 ### AST Transformations
