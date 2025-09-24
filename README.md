@@ -343,6 +343,8 @@ functions = matcher.find_functions(tree: Node) -> List[FunctionDef]
 ### Core Contributors
 - **slimeyy** - Original implementation and architecture
 
+## shout out to ffa and jeff W mans
+
 ##  License
 
 MIT License
