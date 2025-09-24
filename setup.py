@@ -12,7 +12,7 @@ setup(
     description="A powerful Python AST implementation with advanced features for code analysis and transformation",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/slimeyyummy/pyast-remake/tree/main",
+    url="https://github.com/slimeyyummy/pyast",
     packages=find_packages(),
     classifiers=[
         "Development Status :: 3 - Alpha",
@@ -53,7 +53,7 @@ setup(
     },
     keywords="python ast parser transformer compiler analysis",
     project_urls={
-        "Source": "https://github.com/slimeyyummy/pyast-remake/tree/main",
+        "Source": "https://github.com/slimeyyummy/pyast",
     },
     include_package_data=True,
     zip_safe=False,
