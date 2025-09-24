@@ -1,5 +1,5 @@
 import pytest
-from pyast import Parser, Transformer, Matcher
+from pyast import Parser, Transformer, Matcher, ConstantFoldingPass
 
 
 def test_parser_basic():
@@ -16,7 +16,7 @@ def test_transformer_basic():
     tree = parser.parse('x = 1 + 2')
 
     transformer = Transformer()
-    transformer.add_pass(pyast.ConstantFoldingPass())
+    transformer.add_pass(ConstantFoldingPass())
     result = transformer.transform(tree)
     assert result is not None
 
