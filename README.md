@@ -28,7 +28,7 @@
 
 ### From PyPI (Recommended)
 ```bash
-pip install pyast
+pip install pyast-remaked==0.1.1
 ```
 
 ### From Source
