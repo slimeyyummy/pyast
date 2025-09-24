@@ -13,13 +13,14 @@
 -  **Plugin System** - Extensible architecture for custom passes and nodes
 -  **Performance** - Optimized for large codebases
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Installation](#installation)
 - [Quick Start](#quick-start)
+- [Core Concepts](#core-concepts)
 - [Usage Examples](#usage-examples)
-- [API Reference](#API-Reference)
-- [Contributing](#contributing)
+- [Advanced Features](#advanced-features)
+- [API Reference](#api-reference)
 - [Credits](#credits)
 - [License](#license)
 
@@ -47,31 +48,32 @@ pip install -r requirements-dev.txt
 ##  Quick Start
 
 ```python
-import pyast
-from pyast import Parser, Transformer, Matcher
+from pyast import Parser, Transformer, Matcher, ConstantFoldingPass
 
-# Parse Python code into AST
+# Parse Python code
 parser = Parser()
-tree = parser.parse('''
-def fibonacci(n):
-    if n <= 1:
-        return n
-    return fibonacci(n-1) + fibonacci(n-2)
-
-result = fibonacci(10)
-''')
+tree = parser.parse('x = 1 + 2; y = x * 3')
 
 # Apply transformations
 transformer = Transformer()
-transformer.add_pass(pyast.ConstantFoldingPass())
-transformer.add_pass(pyast.DeadCodeEliminationPass())
+transformer.add_pass(ConstantFoldingPass())
 optimized_tree = transformer.transform(tree)
 
 # Pattern matching
 matcher = Matcher()
-functions = matcher.find_functions(tree)
-calls = matcher.find_calls(tree, "fibonacci")
+assignments = matcher.find_matches(tree, 'assign x')
 ```
+
+##  Core Concepts
+
+### AST (Abstract Syntax Tree)
+PyAST converts Python source code into a tree structure where each node represents a syntactic construct (functions, variables, expressions, etc.). This tree can be analyzed and modified programmatically.
+
+### Transformation Pipeline
+Apply a series of transformations to the AST to optimize, refactor, or analyze code. Each transformation pass can modify the tree structure.
+
+### Pattern Matching
+Use query patterns to find specific code patterns in the AST. This is useful for code analysis, refactoring, and static analysis tools.
 
 ##  Usage Examples
 
@@ -85,6 +87,18 @@ tree = parser.parse('x = 1 + 2 * 3')
 print_ast(tree)
 ```
 
+**Output:**
+```
+Program
+  Assign
+    BinOp(+)
+      Constant(1)
+      BinOp(*)
+        Constant(2)
+        Constant(3)
+    Name(x)
+```
+
 ### Advanced Pattern Matching
 ```python
 from pyast import Parser, Matcher
@@ -96,42 +110,151 @@ tree = parser.parse('x = 1 + 2; y = x * 3; z = fibonacci(y)')
 matcher = Matcher()
 
 # Find all function calls
-calls = matcher.find_matches(tree, "call *")
+calls = matcher.find_matches(tree, 'call *')
 
 # Find assignments to specific variables
-assignments = matcher.find_matches(tree, "assign x")
+assignments = matcher.find_matches(tree, 'assign x')
 
 # Find calls to specific functions
-fib_calls = matcher.find_matches(tree, "call fibonacci")
+fib_calls = matcher.find_matches(tree, 'call fibonacci')
 
 # Complex patterns with regex
-import_calls = matcher.find_matches(tree, "call /import.*/")
+import_calls = matcher.find_matches(tree, 'call /import.*/')
 ```
 
 ### AST Transformations
 ```python
-from pyast import Transformer, VariableRenamingPass
+from pyast import Parser, Transformer, ConstantFoldingPass, UnusedVariableRemovalPass
 
-# Rename variables
-rename_pass = VariableRenamingPass("old_var", "new_var")
+# Parse Python code
+parser = Parser()
+tree = parser.parse('x = 1 + 2; y = x * 3; z = y + 1')
+
+# Create transformer and apply passes
 transformer = Transformer()
-transformer.add_pass(rename_pass)
+transformer.add_pass(ConstantFoldingPass())
+transformer.add_pass(UnusedVariableRemovalPass())
 
-# Apply multiple transformations
-transformer.add_pass(pyast.ConstantFoldingPass())
-transformer.add_pass(pyast.UnusedVariableRemovalPass())
+# Transform the AST
+result = transformer.transform(tree)
+print(f'Original: {len(tree.body)} statements')
+print(f'Optimized: {len(result.body)} statements')
+```
 
+### Complex Code Analysis
+```python
+from pyast import Parser, Matcher, SymbolTable
+
+# Parse complex code
+parser = Parser()
+tree = parser.parse('''
+def factorial(n):
+    if n <= 1:
+        return 1
+    return n * factorial(n-1)
+
+result = factorial(5)
+''')
+
+# Analyze symbols
+symbol_table = SymbolTable()
+symbol_table.analyze(tree)
+print(f'Found {len(symbol_table.symbols)} symbols')
+
+# Find all function definitions and calls
+matcher = Matcher()
+functions = matcher.find_functions(tree)
+calls = matcher.find_matches(tree, 'call *')
+
+print(f'Functions: {len(functions)}')
+print(f'Function calls: {len(calls)}')
+```
+
+### Error Handling
+```python
+from pyast import Parser
+
+parser = Parser()
+
+# Parse code with syntax errors (error-tolerant)
+tree = parser.parse('x = 1 + ; y = 2')  # Invalid syntax
+
+if parser.has_errors():
+    print("Parsing errors found:")
+    for error in parser.get_errors():
+        print(f"  - {error}")
+else:
+    print("Code parsed successfully")
+```
+
+##  Advanced Features
+
+### Custom Transformation Passes
+```python
+from pyast import TransformPass, Node
+
+class CustomOptimizationPass(TransformPass):
+    def __init__(self):
+        super().__init__("custom_optimization")
+
+    def transform(self, node: Node) -> Node:
+        # Add your custom transformation logic here
+        return node
+
+# Use the custom pass
+parser = Parser()
+tree = parser.parse('x = 1 + 2')
+transformer = Transformer()
+transformer.add_pass(CustomOptimizationPass())
 result = transformer.transform(tree)
 ```
 
-### Visualization
+### Query Language Patterns
+PyAST supports a rich query language for pattern matching:
+
+| Pattern | Description | Example |
+|---------|-------------|---------|
+| `call *` | All function calls | `matcher.find_matches(tree, "call *")` |
+| `assign x` | Assignments to variable x | `matcher.find_matches(tree, "assign x")` |
+| `call /fib.*/` | Calls matching regex | `matcher.find_matches(tree, "call /fib.*/")` |
+| `name /test_/` | Names matching regex | `matcher.find_matches(tree, "name /test_/")` |
+
+### AST Visualization
 ```python
-from pyast import Visualizer
+from pyast import Parser, Visualizer
+
+parser = Parser()
+tree = parser.parse('def hello(): return "world"')
 
 visualizer = Visualizer()
-dot_code = visualizer.to_dot(tree, "ast_graph.dot")
-json_graph = visualizer.to_json_graph(tree, "ast_graph.json")
-visualizer.export_graphml(tree, "ast_graph.graphml")
+
+# Export to DOT format (Graphviz)
+dot_code = visualizer.to_dot(tree, "ast.dot")
+
+# Export to JSON
+json_data = visualizer.to_json_graph(tree, "ast.json")
+
+# Export to GraphML
+visualizer.export_graphml(tree, "ast.graphml")
+```
+
+### Plugin System
+```python
+from pyast import PluginManager
+
+plugin_manager = PluginManager()
+
+# Register custom node types
+plugin_manager.register_node_type("CustomNode", CustomNodeClass)
+
+# Register custom transformation passes
+plugin_manager.register_pass("custom_pass", CustomPassClass)
+
+# Register hooks for specific events
+def my_hook(node):
+    print(f"Processing node: {node.node_type}")
+
+plugin_manager.register_hook("pre_transform", my_hook)
 ```
 
 ## 🔧 API Reference
@@ -146,6 +269,12 @@ parser = Parser(source_code: str = "", filename: str = "<string>")
 tree = parser.parse(source_code: Optional[str] = None) -> Program
 ```
 
+**Key Methods:**
+- `parse(source_code)` - Parse source code into AST
+- `get_errors()` - Get list of parsing errors
+- `has_errors()` - Check if parsing had errors
+- `clear_errors()` - Clear error list
+
 #### Transformer
 Transformation engine that applies passes in sequence.
 
@@ -154,6 +283,10 @@ transformer = Transformer()
 transformer.add_pass(pass_instance: TransformPass)
 result = transformer.transform(tree: Node) -> Node
 ```
+
+**Key Methods:**
+- `add_pass(pass)` - Add a transformation pass
+- `transform(tree)` - Apply all passes to the tree
 
 #### Matcher
 Pattern matching engine for AST queries.
@@ -164,10 +297,16 @@ matches = matcher.find_matches(tree: Node, pattern: Union[str, Pattern]) -> List
 functions = matcher.find_functions(tree: Node) -> List[FunctionDef]
 ```
 
+**Key Methods:**
+- `find_matches(tree, pattern)` - Find nodes matching pattern
+- `find_functions(tree)` - Find all function definitions
+- `find_calls(tree, func_name)` - Find calls to specific function
+- `find_assignments(tree, var_name)` - Find assignments to variable
+
 ### AST Node Types
 
-| Node Type | Description | Attributes |
-|-----------|-------------|------------|
+| Node Type | Description | Key Attributes |
+|-----------|-------------|----------------|
 | `Program` | Root program node | `body: List[Node]` |
 | `FunctionDef` | Function definition | `name: str`, `args: List[str]`, `body: List[Node]` |
 | `ClassDef` | Class definition | `name: str`, `bases: List[Node]`, `body: List[Node]` |
@@ -179,35 +318,27 @@ functions = matcher.find_functions(tree: Node) -> List[FunctionDef]
 
 ### Transform Passes
 
-| Pass | Description |
-|------|-------------|
-| `ConstantFoldingPass` | Evaluates constant expressions |
-| `DeadCodeEliminationPass` | Removes unreachable code |
-| `ExpressionSimplificationPass` | Simplifies expressions |
-| `UnusedVariableRemovalPass` | Removes unused variables |
-| `VariableRenamingPass` | Renames variables |
-| `FunctionInliningPass` | Inlines simple functions |
+| Pass | Description | Use Case |
+|------|-------------|----------|
+| `ConstantFoldingPass` | Evaluates constant expressions | `1 + 2` → `3` |
+| `DeadCodeEliminationPass` | Removes unreachable code | Eliminates dead branches |
+| `ExpressionSimplificationPass` | Simplifies expressions | `x + 0` → `x` |
+| `UnusedVariableRemovalPass` | Removes unused variables | Cleans up dead code |
+| `VariableRenamingPass` | Renames variables | Refactoring, obfuscation |
+| `FunctionInliningPass` | Inlines simple functions | Performance optimization |
 
-### Query Language
+### Pattern Classes
 
-PyAST supports a powerful query language for pattern matching:
+| Pattern | Description | Example |
+|---------|-------------|---------|
+| `CallPattern` | Match function calls | `CallPattern(func_name="print")` |
+| `AssignPattern` | Match assignments | `AssignPattern(target_name="x")` |
+| `NamePattern` | Match variable names | `NamePattern(name="my_var")` |
+| `WildcardPattern` | Match any node | `WildcardPattern()` |
+| `AndPattern` | Logical AND of patterns | `AndPattern(pat1, pat2)` |
+| `OrPattern` | Logical OR of patterns | `OrPattern(pat1, pat2)` |
 
-```python
-# Find all function calls
-matcher.find_matches(tree, "call *")
-
-# Find assignments to specific variables
-matcher.find_matches(tree, "assign x")
-
-# Find calls to specific functions
-matcher.find_matches(tree, "call fibonacci")
-
-# Complex patterns
-matcher.find_matches(tree, "call print")
-```
-
-## 👥 Credits
-
+##  Credits
 
 ### Core Contributors
 - **slimeyy** - Original implementation and architecture
@@ -237,4 +368,3 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ---
-
