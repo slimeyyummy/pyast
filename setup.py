@@ -9,6 +9,9 @@ import os
 with open(os.path.join(os.path.dirname(__file__), "README.md"), encoding="utf-8") as f:
     long_description = f.read()
 
+# Define your dependencies here
+requirements = []
+
 setup(
     name="pyast_extended",
     version="1.2.0",
@@ -47,7 +50,6 @@ setup(
     },
     entry_points={
         "console_scripts": [
-            # CLI removed as requested
         ],
     },
     include_package_data=True,
