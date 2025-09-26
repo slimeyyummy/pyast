@@ -20,26 +20,12 @@ PyAST provides a simple, extensible AST (Abstract Syntax Tree) implementation fo
 
 ## 🚀 Installation
 
-### Option 1: Install from PyPI (Recommended)
-
-```bash
-pip install pyast
-```
-
-### Option 2: Install from Source
+### Option 1: Install from Source
 
 ```bash
 git clone https://github.com/yourusername/pyast.git
 cd pyast
 pip install -e .
-```
-
-### Option 3: Development Installation
-
-```bash
-git clone https://github.com/yourusername/pyast.git
-cd pyast
-pip install -e ".[dev]"
 ```
 
 ### Requirements
@@ -602,17 +588,6 @@ print(f"- Total nodes: {len(optimized_tree.body)}")
 
 ## 🛠️ Troubleshooting
 
-### Common Issues
-
-**Issue: Import Error**
-```
-ModuleNotFoundError: No module named 'pyast'
-```
-**Solution:**
-```bash
-pip install pyast
-```
-
 **Issue: Empty visualization**
 ```
 Generated HTML shows no nodes
@@ -684,23 +659,11 @@ We welcome contributions! Here's how you can help:
 ### Development Setup
 
 ```bash
-git clone https://github.com/yourusername/pyast.git
+git clone https://github.com/slimeyyummy/pyast-extended
 cd pyast
 pip install -e ".[dev]"
 ```
 
-### Running Tests
-
-```bash
-# Run all tests
-python -m pytest
-
-# Run specific test file
-python -m pytest tests/test_parser.py
-
-# Run with coverage
-python -m pytest --cov=pyast
-```
 
 ### Code Style
 
@@ -713,17 +676,7 @@ python -m pytest --cov=pyast
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 📞 Contact
-
-For questions, issues, or suggestions:
-
-- **GitHub Issues**: [Create an issue](https://github.com/yourusername/pyast/issues)
-- **Email**: contact@pyast.dev
-- **Documentation**: [docs.pyast.dev](https://docs.pyast.dev)
-- **Discord**: [Join our community](https://discord.gg/pyast)
-
 ---
 
-**Made with ❤️ for the Python community**
 
-*PyAST v0.1.0 - Comprehensive Python AST Analysis and Transformation*
+*PyAST v1.2.0 - Comprehensive Python AST Analysis and Transformation*
