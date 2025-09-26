@@ -5,11 +5,12 @@ Setup configuration for PyAST package.
 from setuptools import setup, find_packages
 import os
 
+# Read README for long description
 with open(os.path.join(os.path.dirname(__file__), "README.md"), encoding="utf-8") as f:
     long_description = f.read()
 
 setup(
-    name="pyast",
+    name="pyast_extended",
     version="1.2.0",
     description="A comprehensive Python AST implementation with advanced features for code analysis, transformation, and visualization",
     long_description=long_description,
@@ -46,6 +47,7 @@ setup(
     },
     entry_points={
         "console_scripts": [
+            # CLI removed as requested
         ],
     },
     include_package_data=True,
