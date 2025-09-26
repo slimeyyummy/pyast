@@ -22,7 +22,7 @@ PyAST provides a simple, extensible AST (Abstract Syntax Tree) implementation fo
 ### Option 1: Install from Source
 
 ```bash
-git clone https://github.com/yourusername/pyast.git
+https://github.com/slimeyyummy/pyast-extended
 cd pyast
 pip install -e .
 ```
