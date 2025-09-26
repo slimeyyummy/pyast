@@ -13,7 +13,6 @@ PyAST provides a simple, extensible AST (Abstract Syntax Tree) implementation fo
 - [Advanced Features](#-advanced-features)
 - [Examples](#-examples)
 - [API Reference](#-api-reference)
-- [Contributing](#-contributing)
 - [Troubleshooting](#-troubleshooting)
 - [FAQ](#-faq)
 - [License](#-license)
@@ -641,29 +640,6 @@ A: Use the metrics calculation feature which provides node count, depth, branchi
 
 **Q: Can I transform and regenerate Python code?**
 A: Yes! The transformation pipeline can modify ASTs and the serialization system can convert back to Python code.
-
-## 🤝 Contributing
-
-We welcome contributions! Here's how you can help:
-
-### Getting Started
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Make your changes
-4. Add tests for your changes
-5. Commit your changes (`git commit -m 'Add amazing feature'`)
-6. Push to the branch (`git push origin feature/amazing-feature`)
-7. Open a Pull Request
-
-### Development Setup
-
-```bash
-git clone https://github.com/slimeyyummy/pyast-extended
-cd pyast
-pip install -e ".[dev]"
-```
-
 
 ### Code Style
 
